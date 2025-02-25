@@ -18,19 +18,19 @@ class ThaiConsonantFlashcards:
     def __init__(self, root):
         self.root = root
         self.root.title("Thai Consonant Flashcard Game")
-        
+
         # Create a label to display the consonant
         self.label = tk.Label(root, font=("Arial", 50), width=4, height=2)
         self.label.pack(pady=20)
-        
+
         # Button to show random consonant
         self.show_button = tk.Button(root, text="Show Consonant", font=("Arial", 20), command=self.show_consonant)
         self.show_button.pack(pady=10)
-        
+
         # Button to show consonant name
         self.name_button = tk.Button(root, text="Show Name", font=("Arial", 20), command=self.show_name)
         self.name_button.pack(pady=10)
-        
+
         # Label to show the name (initially hidden)
         self.name_label = tk.Label(root, font=("Arial", 30), width=12, height=2)
         self.name_label.pack(pady=20)
@@ -51,13 +51,38 @@ class ThaiConsonantFlashcards:
         self.name_label.config(text=name)
         self.name_label.pack()
 
-if __name__ == "__main__":
+
+class StartupScreen:
+    def __init__(self, root, start_game_callback):
+        self.root = root
+        self.start_game_callback = start_game_callback
+        
+        # Label for the startup screen
+        self.start_label = tk.Label(root, text="Demo for EngiLogic", font=("Arial", 30), height=2)
+        self.start_label.pack(pady=50)
+        
+        # Start game button
+        self.start_button = tk.Button(root, text="Start Game", font=("Arial", 20), command=self.start_game)
+        self.start_button.pack(pady=20)
+    
+    def start_game(self):
+        """Hide the startup screen and start the flashcard game."""
+        self.start_label.pack_forget()
+        self.start_button.pack_forget()
+        self.start_game_callback()
+
+
+def run_game():
     # Create the main window (root)
     root = tk.Tk()
 
-    # Create the flashcard game
-    game = ThaiConsonantFlashcards(root)
+    # Create the startup screen
+    startup_screen = StartupScreen(root, lambda: ThaiConsonantFlashcards(root))
 
     # Run the GUI loop
     root.mainloop()
-#pointless change to make a commit
+
+
+if __name__ == "__main__":
+    run_game()
+
